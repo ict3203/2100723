@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   jenkins:
     container_name: jenkins
@@ -11,13 +10,28 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./jenkins_home:/var/jenkins_home
-  
+
   webapp:
     container_name: webapp
     build: ./webapp
     ports:
-      - "80:80"
+      - '5000:5000'
+
+  sonarqube:
+    image: sonarqube:latest
+    container_name: sonarqube1
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    ports:
+      - '9000:9000'
+    networks:
+      - jenkins_network
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+
+networks:
+  jenkins_network:
 
 volumes:
-  jenkins_data:
+  sonarqube_data:
     driver: local
