@@ -38,7 +38,7 @@ def home():
     # For GET requests or initial load, render the home page
     return render_template('home.html')
 
-@app.route('/welcome/<password>', methods=['GET', 'POST'])
+@app.route('/welcome/<password>', methods=['POST'])
 def welcome(password):
     if request.method == 'POST':
         # Add any logout logic here if needed
